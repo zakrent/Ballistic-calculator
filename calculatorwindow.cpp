@@ -19,6 +19,7 @@ void CalculatorWindow::on_calculate_clicked()
 {
     calculator->muzzleVel   = ui->muzzleVel->value();
     calculator->maxDistance = ui->maxDistance->value();
+    calculator->BC          = ui->BC->value();
 
     std::vector<CalculationResult> results = calculator->calculate();
 

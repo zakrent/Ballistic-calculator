@@ -26,6 +26,8 @@ public:
 private:
 
     float getG1Coeff(float mach);
+    QVector3D calculateDrag(QVector3D velocity);
+
 };
 
 #endif // BALLISTICCALCULATOR_H
