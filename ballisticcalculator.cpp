@@ -26,8 +26,7 @@ float BallisticCalculator::getG1Coeff(float mach)
 
 QVector3D BallisticCalculator::calculateDrag(QVector3D velocity)
 {
-    float speedOfSound = 340.29f;
-
+    float speedOfSound = 20.05f*sqrtf(1+temperature/273.15f);
     float standardSD = 703.0f;
 
     float speed = velocity.length();
@@ -40,7 +39,7 @@ std::vector<CalculationResult> BallisticCalculator::calculate()
 {
     std::vector<CalculationResult> results;
 
-    airDensity = 1.292f*274.15f/(temperature+274.15)*pressure/1013.25;
+    airDensity = 1.292f*274.15f/(temperature+273.15)*pressure/1013.25;
 
     float dt = 0.01f;
 
@@ -58,9 +57,8 @@ std::vector<CalculationResult> BallisticCalculator::calculate()
         QVector3D a3 = dt*(calculateDrag(currentState.velocity+a2*0.5) + QVector3D(0.0f, 0.0f, -9.81f));
         QVector3D a4 = dt*(calculateDrag(currentState.velocity+a3)     + QVector3D(0.0f, 0.0f, -9.81f));
 
-        QVector3D wind = QVector3D(0.0f, windSpeed*(1.0f-currentState.velocity.length()*muzzleVel), 0.0f);
-
-        currentState.velocity = currentState.velocity + 1.0f/6.0f*(a1 + 2.0f*a2 + 2.0f*a3 + a4) + wind;
+        currentState.velocity = currentState.velocity + 1.0f/6.0f*(a1 + 2.0f*a2 + 2.0f*a3 + a4);
+        currentState.velocity.setY(windSpeed*(1.0f-(currentState.velocity.length()/muzzleVel)));
 
         currentState.position = currentState.position + currentState.velocity*dt;
         currentState.time += dt;

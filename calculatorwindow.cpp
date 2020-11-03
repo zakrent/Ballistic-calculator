@@ -10,6 +10,7 @@ CalculatorWindow::CalculatorWindow(QWidget *parent)
 
     POISeries = new QLineSeries();
     POISeries->setName("POI [m]");
+    POISeries->setVisible(false);
 
     dropSeries = new QLineSeries();
     dropSeries->setName("Drop [m]");
@@ -26,11 +27,16 @@ CalculatorWindow::CalculatorWindow(QWidget *parent)
     timeSeries->setName("Time [s]");
     timeSeries->setVisible(false);
 
+    windDeflectionSeries = new QLineSeries();
+    windDeflectionSeries->setName("Wind deflection [m]");
+    windDeflectionSeries->setVisible(false);
+
     ui->chartView->chart()->addSeries(POISeries);
     ui->chartView->chart()->addSeries(dropSeries);
     ui->chartView->chart()->addSeries(speedSeries);
     ui->chartView->chart()->addSeries(energySeries);
     ui->chartView->chart()->addSeries(timeSeries);
+    ui->chartView->chart()->addSeries(windDeflectionSeries);
     ui->chartView->chart()->createDefaultAxes();
 
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
@@ -75,6 +81,7 @@ void CalculatorWindow::on_calculate_clicked()
     speedSeries->clear();
     energySeries->clear();
     timeSeries->clear();
+    windDeflectionSeries->clear();
 
     for(CalculationResult result : results){
         POISeries->append(result.position.x(), result.POI);
@@ -82,6 +89,7 @@ void CalculatorWindow::on_calculate_clicked()
         speedSeries->append(result.position.x(), result.velocity.length());
         energySeries->append(result.position.x(), result.energy);
         timeSeries->append(result.position.x(), result.time);
+        windDeflectionSeries->append(result.position.x(), result.position.y());
     }
 
     autoscaleYAxis();
@@ -133,6 +141,13 @@ void CalculatorWindow::on_checkBox_5_stateChanged(int arg1)
 void CalculatorWindow::on_POI_stateChanged(int arg1)
 {
     POISeries->setVisible(arg1);
+    autoscaleYAxis();
+}
+
+
+void CalculatorWindow::on_checkBox_stateChanged(int arg1)
+{
+    windDeflectionSeries->setVisible(arg1);
     autoscaleYAxis();
 }
 

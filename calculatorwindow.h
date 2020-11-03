@@ -35,6 +35,8 @@ private slots:
 
     void on_POI_stateChanged(int arg1);
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
     Ui::CalculatorWindow *ui;
     BallisticCalculator *calculator;
@@ -48,8 +50,9 @@ private:
             QLineSeries *speedSeries;
             QLineSeries *energySeries;
             QLineSeries *timeSeries;
+            QLineSeries *windDeflectionSeries;
         };
-        QLineSeries *series[5];
+        QLineSeries *series[6];
     };
 
     float plotDistance;
