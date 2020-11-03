@@ -4,6 +4,7 @@
 #include "ballisticcalculator.h"
 
 #include <QMainWindow>
+#include <QtCharts>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class CalculatorWindow; }
@@ -20,8 +21,39 @@ public:
 private slots:
     void on_calculate_clicked();
 
+    void on_plotDistanceSlider_sliderMoved(int position);
+
+    void on_plotDistanceSpinBox_valueChanged(double arg1);
+
+    void on_Drop_stateChanged(int arg1);
+
+    void on_checkBox_3_stateChanged(int arg1);
+
+    void on_checkBox_4_stateChanged(int arg1);
+
+    void on_checkBox_5_stateChanged(int arg1);
+
+    void on_POI_stateChanged(int arg1);
+
 private:
     Ui::CalculatorWindow *ui;
     BallisticCalculator *calculator;
+
+    union
+    {
+        struct
+        {
+            QLineSeries *POISeries;
+            QLineSeries *dropSeries;
+            QLineSeries *speedSeries;
+            QLineSeries *energySeries;
+            QLineSeries *timeSeries;
+        };
+        QLineSeries *series[5];
+    };
+
+    float plotDistance;
+
+    void autoscaleYAxis();
 };
 #endif // CALCULATORWINDOW_H

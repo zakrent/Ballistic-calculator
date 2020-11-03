@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>600</height>
+    <width>1141</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -50,7 +50,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="POI">
             <property name="text">
              <string>POI</string>
             </property>
@@ -64,9 +64,12 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="Drop">
             <property name="text">
              <string>Drop</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -91,14 +94,36 @@
            </widget>
           </item>
           <item row="2" column="1" colspan="3">
-           <widget class="QSlider" name="horizontalSlider">
+           <widget class="QSlider" name="plotDistanceSlider">
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="singleStep">
+             <number>1</number>
+            </property>
+            <property name="pageStep">
+             <number>10</number>
+            </property>
+            <property name="value">
+             <number>10</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
           <item row="2" column="4">
-           <widget class="QSpinBox" name="spinBox"/>
+           <widget class="QDoubleSpinBox" name="plotDistanceSpinBox">
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>100.000000000000000</double>
+            </property>
+            <property name="value">
+             <double>1000.000000000000000</double>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -173,13 +198,30 @@
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QDoubleSpinBox" name="bulletMass"/>
+             <widget class="QDoubleSpinBox" name="bulletMass">
+              <property name="maximum">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+             <widget class="QDoubleSpinBox" name="zeroDistance">
+              <property name="minimum">
+               <double>10.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>10000.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>10.000000000000000</double>
+              </property>
+             </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_5"/>
+             <widget class="QDoubleSpinBox" name="scopeHeight"/>
             </item>
            </layout>
           </item>
@@ -189,34 +231,6 @@
              <widget class="QLabel" name="label_4">
               <property name="text">
                <string>Max distance [m]:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_9">
-              <property name="text">
-               <string>Pressure [hPa]:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Wind speed [m/s]:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_11">
-              <property name="text">
-               <string>Temperature [°C]:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_12">
-              <property name="text">
-               <string>Wind direction [°]:</string>
               </property>
              </widget>
             </item>
@@ -233,17 +247,49 @@
               </property>
              </widget>
             </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>Cross wind speed [m/s]:</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_7"/>
+             <widget class="QDoubleSpinBox" name="windSpeed"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>Temperature [°C]:</string>
+              </property>
+             </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_8"/>
+             <widget class="QDoubleSpinBox" name="temperature">
+              <property name="value">
+               <double>20.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Pressure [hPa]:</string>
+              </property>
+             </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
-            </item>
-            <item row="4" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_10"/>
+             <widget class="QDoubleSpinBox" name="pressure">
+              <property name="maximum">
+               <double>2000.000000000000000</double>
+              </property>
+              <property name="singleStep">
+               <double>100.000000000000000</double>
+              </property>
+              <property name="value">
+               <double>1013.250000000000000</double>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -290,22 +336,8 @@
           <string>Table</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="0">
-           <widget class="QPushButton" name="pushButton_options">
-            <property name="text">
-             <string>Options</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="pushButton_export">
-            <property name="text">
-             <string>Export</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QTableView" name="tableView"/>
+          <item row="1" column="1">
+           <widget class="QSpinBox" name="spinBox_2"/>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_2">
@@ -317,8 +349,76 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBox_2"/>
+          <item row="0" column="0" colspan="2">
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>500</height>
+             </size>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="sizeAdjustPolicy">
+             <enum>QAbstractScrollArea::AdjustIgnored</enum>
+            </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
+            <row>
+             <property name="text">
+              <string>Data</string>
+             </property>
+            </row>
+            <column>
+             <property name="text">
+              <string>Distance [m]</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>POI [m]</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Drop [m]</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Energy [J]</string>
+             </property>
+            </column>
+            <item row="0" column="0">
+             <property name="text">
+              <string>999</string>
+             </property>
+            </item>
+            <item row="0" column="1">
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
+            <item row="0" column="2">
+             <property name="text">
+              <string>100</string>
+             </property>
+            </item>
+            <item row="0" column="3">
+             <property name="text">
+              <string>100</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPushButton" name="pushButton_export">
+            <property name="text">
+             <string>Export</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
