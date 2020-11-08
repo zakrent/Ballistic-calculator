@@ -37,6 +37,8 @@ private slots:
 
     void on_checkBox_stateChanged(int arg1);
 
+    void on_export_2_clicked();
+
 private:
     Ui::CalculatorWindow *ui;
     BallisticCalculator *calculator;

@@ -94,6 +94,41 @@ void CalculatorWindow::on_calculate_clicked()
 
     autoscaleYAxis();
 
+    ui->tableWidget->clearContents();
+
+    int tableRows = ui->maxDistance->value()/ui->stepSize->value();
+    ui->tableWidget->setRowCount(tableRows);
+    int nextRow = 0;
+    float nextDistance = ui->stepSize->value();
+    float prevError = 100000.0;
+    CalculationResult prevResult = results[0];
+    for(int i = 0; i < (int)results.size(); i++){
+        CalculationResult result = results[i];
+
+        float error = std::abs(result.position.x() - nextDistance);
+
+        if(i == (int)results.size() - 1){
+            error = 100000.0f;
+            prevResult = result;
+        }
+
+        if(error > prevError){
+            ui->tableWidget->setItem(nextRow, 0, new QTableWidgetItem(QString::number(std::roundf(prevResult.position.x()/ui->stepSize->value())*ui->stepSize->value())));
+            ui->tableWidget->setItem(nextRow, 1, new QTableWidgetItem(QString::number(prevResult.POI)));
+            ui->tableWidget->setItem(nextRow, 2, new QTableWidgetItem(QString::number(prevResult.position.z())));
+            ui->tableWidget->setItem(nextRow, 3, new QTableWidgetItem(QString::number(prevResult.position.y())));
+            ui->tableWidget->setItem(nextRow, 4, new QTableWidgetItem(QString::number(prevResult.energy)));
+
+            prevError = 10000.0;
+            nextDistance += ui->stepSize->value();
+            nextRow++;
+        }
+        else{
+            prevError = error;
+            prevResult = result;
+        }
+    }
+
 }
 
 void CalculatorWindow::on_plotDistanceSlider_sliderMoved(int position)
@@ -176,4 +211,52 @@ void CalculatorWindow::autoscaleYAxis()
     axis->applyNiceNumbers();
     axis->setTickCount(11);
 
+}
+
+void CalculatorWindow::on_export_2_clicked()
+{
+    QString fileName = QFileDialog::getSaveFileName(this);
+
+    int separatorIdx = ui->separator->currentIndex();
+
+    QString separator = " ";
+
+    switch(separatorIdx){
+        case 0:
+            separator = " ";
+        break;
+        case 1:
+            separator = ";";
+        break;
+        case 2:
+            separator = ",";
+        break;
+    }
+
+    if(!fileName.isEmpty()){
+        QFile file(fileName);
+        if(!file.open(QIODevice::WriteOnly)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                   file.errorString());
+            return;
+        }
+        QTextStream out(&file);
+
+        for(int j = 0; j < ui->tableWidget->columnCount(); j++){
+            out<<ui->tableWidget->horizontalHeaderItem(j)->text();
+            if(j != ui->tableWidget->columnCount()-1)
+                out<<separator;
+        }
+        out<<Qt::endl;
+
+        for(int i = 0; i < ui->tableWidget->rowCount(); ++i){
+            for (int j = 0; j < ui->tableWidget->columnCount(); j++){
+                out<<ui->tableWidget->item(i, j)->text();
+                if(j != ui->tableWidget->columnCount()-1)
+                    out<<separator;
+
+            }
+            out<<Qt::endl;
+        }
+    }
 }
