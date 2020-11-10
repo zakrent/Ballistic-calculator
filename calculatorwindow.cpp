@@ -100,7 +100,7 @@ void CalculatorWindow::on_calculate_clicked()
     ui->tableWidget->setRowCount(tableRows);
     int nextRow = 0;
     float nextDistance = ui->stepSize->value();
-    float prevError = 100000.0;
+    float prevError = std::numeric_limits<float>::infinity();
     CalculationResult prevResult = results[0];
     for(int i = 0; i < (int)results.size(); i++){
         CalculationResult result = results[i];
