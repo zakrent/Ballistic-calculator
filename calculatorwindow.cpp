@@ -108,7 +108,7 @@ void CalculatorWindow::on_calculate_clicked()
         float error = std::abs(result.position.x() - nextDistance);
 
         if(i == (int)results.size() - 1){
-            error = 100000.0f;
+            error = std::numeric_limits<float>::infinity();
             prevResult = result;
         }
 
@@ -119,7 +119,7 @@ void CalculatorWindow::on_calculate_clicked()
             ui->tableWidget->setItem(nextRow, 3, new QTableWidgetItem(QString::number(prevResult.position.y())));
             ui->tableWidget->setItem(nextRow, 4, new QTableWidgetItem(QString::number(prevResult.energy)));
 
-            prevError = 10000.0;
+            prevError = std::numeric_limits<float>::infinity();
             nextDistance += ui->stepSize->value();
             nextRow++;
         }
